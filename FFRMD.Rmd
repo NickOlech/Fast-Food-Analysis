@@ -18,6 +18,41 @@ library(readr)
 
 #Read the dataset
 fastfood <- read_csv("fastfood.csv")
-View(fastfood)
+head(fastfood)
 ```
+##Step Two - Variable Analysis
+```{r}
+str(fastfood)
+```
+The variables in the dataframe are as follows:
+
+Categorical: 
+- restaurant: The name of the restaurant where the item is offered.
+- item: The name of the fast food item.
+- salad: classify whether the item is a salad or some other categorization related to salads.
+
+Numerical:
+- calories: The total number of calories in the item.
+- cal_fat: Calories from fat in the item.
+- total_fat: Total fat content of the item (in grams).
+- sat_fat: Saturated fat content of the item (in grams).
+- trans_fat: Trans fat content of the item (in grams).
+- cholesterol: Cholesterol content of the item (in milligrams).
+- sodium: Sodium content of the item (in milligrams).
+- total_carb: Total carbohydrate content of the item (in grams).
+- fiber: Dietary fiber content of the item (in grams).
+- sugar: Total sugars in the item (in grams).
+- protein: Protein content of the item (in grams).
+- vit_a: Vitamin A content (percentage of daily value).
+- vit_c:  Vitamin C content (percentage of daily value).
+- calcium: Calcium content (percentage of daily value).
+
+##Step Three - Question Proposal
+
+
+
+
+
+
+
 
