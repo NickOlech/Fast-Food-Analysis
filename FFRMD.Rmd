@@ -49,6 +49,23 @@ Numerical:
 
 ##Step Three - Question Proposal
 
+Part one (Basic Questions):
+How many restaurants are represented in this data set?
+How many different total menu options still are there?
+Which restaurants offer the most amount of options?
+How many items exceed 20 grams of sugar?
+
+Part two (Research Questions):
+What is the relationship between total fat and caloric content?
+What are the nutritional differences between items classified as "Salad" and others?
+Can you identify any clusters of menu items based on nutritional content?
+
+##Step Four - Data Sorting
+
+
+
+
+
 
 
 
