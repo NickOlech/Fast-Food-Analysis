@@ -20,7 +20,7 @@ library(readr)
 fastfood <- read_csv("fastfood.csv")
 head(fastfood)
 ```
-##Step Two - Variable Analysis
+## Step Two - Variable Analysis
 ```{r}
 str(fastfood)
 ```
@@ -47,7 +47,7 @@ Numerical:
 - vit_c:  Vitamin C content (percentage of daily value).
 - calcium: Calcium content (percentage of daily value).
 
-##Step Three - Question Proposal
+## Step Three - Question Proposal
 
 Part one (Basic Questions):
 How many restaurants are represented in this data set?
@@ -60,7 +60,77 @@ What is the relationship between total fat and caloric content?
 What are the nutritional differences between items classified as "Salad" and others?
 Can you identify any clusters of menu items based on nutritional content?
 
-##Step Four - Data Sorting
+## Step Four - Data Sorting
+
+# Part (a), lets do some basic analysis of our data
+I am concerned with useability of last column titled 'salad', so I want to make sure there are more than only one unique value
+
+```{r}
+# find how many unique values are in the column named 'salad'
+Salad_count <- fastfood %>% 
+      distinct(salad) %>%
+       nrow()
+
+# print the amount of unique values
+print(Salad_count)
+```
+Before we sort, I also want to find out what calorie benchmark to sort by. This is just so menu items that are not typically ordered as entrees such as sides of dressing are not taken into account. 
+
+```{r}
+# sort the data frame from items with most calories to the least
+fastfood_calorie_sorting <- fastfood %>% 
+           arrange(desc(calories))
+
+# print new table
+print(fastfood_calorie_sorting)
+```
+```{r}
+# graph to visualize how many items there are per caloric density
+ggplot(data = fastfood_calorie_sorting, aes(x=calories)) +
+  geom_histogram(binwidth = 150, fill ="blue", color = "black") + # we are going to put in bins of 150 calories
+  labs(x = "Item", y = "Calories", title= "Calorie Content of Different Menu Items") + 
+  theme_minimal()
+```
+```{r}
+# lets look at which items appear in the first bin to see if they have relevance in our analysis
+first_bin <- fastfood_calorie_sorting %>%
+  filter(calories <= 150) %>%
+  select(item, calories) #only show the calories
+
+# show the new data
+print(first_bin)
+```
+```{r}
+# lets also just see how many restaurants there are in the set and how many recorded menu items are.
+restaurant_description <- fastfood %>%
+  group_by(restaurant) %>%
+  summarise(Item_counts = n()) %>% 
+  arrange(Item_counts)
+
+# provide a visual to show what establishments are represented and how well they all are
+ggplot(restaurant_description, aes(x = reorder(restaurant, Item_counts), y = Item_counts, fill = restaurant)) +
+  geom_bar(stat = "identity", color = "black") +
+  labs(x = "Restaurant", y = "Number of Menu Items", title = "Number of Menu Items per Restaurant") +
+  theme_minimal()
+```
+
+
+# Part(b), before we filter our official data set that we will work with, lets recap what I have found.
+
+There are 23 items that are below or equal to 150 calories, however all the items that are included are items that someone would  choose to eat as an entree or as a side. There is nothing included such as "side of ranch" or "salad dressing" which are items consumers would likely receive as a complementary side. This means that we can use every single entry in the data set
+
+Another thing for sorting is that the column "salad" does not have any relevance in this data set, therefore it
+would be wise to remove it
+
+There are eight restaurants taken into account in this data frame with the amount of items accounted in each of them ranging from 27 to 115 different observations (aka menu items).
+
+All values that may have been blank already are filled in with NA's, so there is no need to add that to our final sorted data set. 
+
+# Part(c), do a little cleaning to make our workable dataset. 
+
+
+
+
 
 
 
