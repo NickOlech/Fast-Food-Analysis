@@ -1,5 +1,5 @@
 ---
-title: "FF Research"
+title: "Fast Food Research"
 author: "Nick Olech"
 date: "2024-05-06"
 output: html_document
@@ -63,7 +63,7 @@ Can you identify any clusters of menu items based on nutritional content?
 ## Step Four - Data Sorting
 
 # Part (a), lets do some basic analysis of our data
-I am concerned with useability of last column titled 'salad', so I want to make sure there are more than only one unique value
+I am concerned with usability of last column titled 'salad', so I want to make sure there are more than only one unique value
 
 ```{r}
 # find how many unique values are in the column named 'salad'
@@ -130,16 +130,49 @@ All values that may have been blank already are filled in with NA's, so there is
 
 
 ```{r}
-#Drop the salad column 
+# Drop the salad column 
 fastfood_data <- fastfood %>%
   select(-salad)
 ```
 
+## Step Five - Basic Analysis
 
+How many different total menu options still are there?
+```{r}
+# Tell us how many entries and categorical/quantitative variables are taken into account 
+dim(fastfood_data)
+```
 
+How many restaurants are represented in this data set?
+```{r}
+# How many restaurants are taken into account
+number_restaurants <- fastfood_data %>%
+  distinct(restaurant) %>%  
+  nrow()
 
+print(number_restaurants)
+```
 
+Which restaurants offer the most amount of options?
+```{r}
+# Which restaurants offer the most total options
+restaurants_options <- fastfood_data %>%
+  group_by(restaurant) %>%
+  summarise(number_of_items = n(), .groups = 'drop') %>%
+  arrange(desc(number_of_items))
 
+print(restaurants_options)
+```
+
+How many items exceed 20 grams of sugar?
+```{r}
+# Which rows have more than 20 grams of sugar
+sugar_summary <- fastfood_data %>%
+  filter(sugar > 20) %>%
+  nrow() #Count how many rows meet filter condition
+  
+print(sugar_summary)
+```
 
 
 
