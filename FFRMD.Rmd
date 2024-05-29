@@ -129,6 +129,12 @@ All values that may have been blank already are filled in with NA's, so there is
 # Part(c), do a little cleaning to make our workable dataset. 
 
 
+```{r}
+#Drop the salad column 
+fastfood_data <- fastfood %>%
+  select(-salad)
+```
+
 
 
 
