@@ -1,2 +1,5 @@
 # Fast Food Analysis
-R practice, sorting a data set and analyzing trends with comparative analysisin order to answer questions related to fast food establishments in the data set. 
+
+This project aims to explore and analyze trends in the fast food industry, focusing on nutritional information across various major fast food chains. We investigate menu items to uncover insights related to caloric content, sugar levels, sodium, and other nutritional metrics.
+
+Summer 2024 project to increase familiarity with github and proficiency in R
