@@ -20,6 +20,11 @@ library(readr)
 fastfood <- read_csv("fastfood.csv")
 head(fastfood)
 ```
+
+
+
+
+
 ## Step Two - Variable Analysis
 ```{r}
 str(fastfood)
@@ -47,6 +52,10 @@ Numerical:
 - vit_c:  Vitamin C content (percentage of daily value).
 - calcium: Calcium content (percentage of daily value).
 
+
+
+
+
 ## Step Three - Question Proposal
 
 Part one (Basic Questions):
@@ -56,9 +65,14 @@ Which restaurants offer the most amount of options?
 How many items exceed 20 grams of sugar?
 
 Part two (Research Questions):
+What fast food establishments are the best for achieving a protein goal?
 What is the relationship between total fat and caloric content?
 What are the nutritional differences between items classified as "Salad" and others?
 Can you identify any clusters of menu items based on nutritional content?
+
+
+
+
 
 ## Step Four - Data Sorting
 
@@ -135,6 +149,10 @@ fastfood_data <- fastfood %>%
   select(-salad)
 ```
 
+
+
+
+
 ## Step Five - Basic Analysis
 
 How many different total menu options still are there?
@@ -173,7 +191,45 @@ sugar_summary <- fastfood_data %>%
   
 print(sugar_summary)
 ```
+## Step Six - Advanced Analysis
 
+The first set of analysis I will do is to find all sorts of information regarding the abundance of protein in different menu items
+
+First lets start with a new data frame that has only the variables I need as well as a new one for finding the calorie to protein ratio
+
+
+```{r}
+# new data for protein analysis
+protein_analysis <- fastfood_data %>%
+  mutate(cals_per_protein = calories / protein) %>%
+  select(restaurant, item, calories, protein, cals_per_protein) # only include necessary variables
+
+head(protein_analysis)
+```
+
+Now that we have our new variable to see how many calories are in each gram of protein, lets sort to see which restaurant offers the most amount of protein dense options.
+
+It is often common practice for most people to believe that there should be 10 or less calories per g of protein in any "high protein" food, however since these are fast food places, I will cut a little more slack and make it 12 cal / g of protein or less
+```{r}
+high_protein_options <- protein_analysis %>%
+  filter(cals_per_protein < 12) %>%
+  select(restaurant, item, calories, protein, cals_per_protein) # only include necessary variables
+```
+Lets see which restaurants offer the most amount of these high protein options.
+```{r}
+restaurant_high_protein <- high_protein_options %>%
+  group_by(restaurant) %>%
+  summarise(high_protein_count = n()) %>%
+  arrange(high_protein_count)
+
+ggplot(data = restaurant_high_protein, aes(x = reorder(restaurant, high_protein_count), y = high_protein_count)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "High-Protein Options by Restaurant",
+       x = "Restaurant",
+       y = "Number of High-Protein Options") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
 
 
 
